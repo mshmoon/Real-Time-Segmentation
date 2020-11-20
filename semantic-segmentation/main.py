@@ -27,14 +27,14 @@ to_img=transforms.ToPILImage()
 input_transform = Compose([ 
     Resize((512,1024)),
     RandomGrayscale(0.02),
-    #CenterCrop((512,1024)),
+    CenterCrop((512,1024)),
     ToTensor(),
     Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
     ])
 
 target_transform = Compose([   
     Resize((512,1024)),
-    #CenterCrop((512,1024)),
+    CenterCrop((512,1024)),
     ])
 
 def train(args, model):
@@ -45,7 +45,7 @@ def train(args, model):
     weight = torch.ones(20)
     weight[19]=0
     criterion = CrossEntropyLoss2d(weight.cuda())
-   # model.load_state_dict(torch.load('segnet-001-0000.pth'),strict=True)
+    model.load_state_dict(torch.load('segnet-001-0000.pth'),strict=True)
     lr_start = 0.05
     for epoch in range(0, args.num_epochs):
         lr_init=lr_start*((args.num_epochs-epoch)/args.num_epochs)
@@ -71,7 +71,6 @@ def train(args, model):
 
 from piwise.utils import trans_id
 def evaluate( model):
-    print("-----build dir-----")
     # model.load_state_dict(torch.load('segnet-024-0000.pth'),strict=False)
     loader = DataLoader(test_set('D:\someprogram\dataset\cityscapes_test\\', input_transform, target_transform),
                         num_workers=0, batch_size=1, shuffle=False)
@@ -86,7 +85,6 @@ def evaluate( model):
     for param in model.parameters():
         param.requires_grad = False
     T=0
-    print("-----begin eval-----")
     for i ,(image,path) in enumerate(loader):
 
         image = Variable(image.cuda(), volatile=True)
@@ -103,9 +101,6 @@ def evaluate( model):
         gray=Image.fromarray(out.astype('uint8'))
         gray.save(save_dir1+path[0])
         rgb.save(save_dir2+path[0])
-
-    print(f"total infer time:{T}")
-    print("-----eval over-----")
 
 def main(args):
     Net = None
@@ -146,4 +141,3 @@ if __name__ == '__main__':
     parser_train.add_argument('--steps-save', type=int, default=500)
     main(parser.parse_args())
 
-    #python main.py --cuda --model segnet train --datadir data  --num-epochs 30 --num-workers 4 --batch-size 4 --num-classes 20

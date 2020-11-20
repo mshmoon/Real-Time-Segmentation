@@ -5,9 +5,9 @@ from torch.utils.data import Dataset
 from PIL import Image
 
 EXTENSIONS = ['.jpg', '.png']
-
 num_classes = 19
 ignore_label = 19
+scale=[1/2,3/4,1,5/4,3/2]
 
 
 def load_image(file):
@@ -44,21 +44,19 @@ class Cityscapes(Dataset):
         filename = self.filenames[index]
         filename1=filename.split("gtFine")[0]+'leftImg8bit'
         degree = int(np.random.uniform(0,360,1))
-
         ind=int(np.random.uniform(0,5,1))
-        scale=[1/2,3/4,1,5/4,3/2]
                   
         with open(image_path(self.images_root, filename1, '.png'), 'rb') as f:
             image = load_image(f).convert('RGB')
             s1,s2,s3=np.shape(image)                   
-            #image=image.resize((int(s1*scale[ind]),int(s2*scale[ind])))
+            image=image.resize((int(s1*scale[ind]),int(s2*scale[ind])))
             if degree>180:
                 image=image.transpose(Image.FLIP_LEFT_RIGHT)
 
         with open(image_path(self.labels_root, filename, '.png'), 'rb') as f:
             
             label = load_image(f).convert('P')  
-            #label=label.resize((int(s1*scale[ind]),int(s2*scale[ind])))
+            label=label.resize((int(s1*scale[ind]),int(s2*scale[ind])))
             if degree>180:
                 label=label.transpose(Image.FLIP_LEFT_RIGHT)
             mask = np.array(label)
@@ -74,7 +72,6 @@ class Cityscapes(Dataset):
         return image, label
     def __len__(self):
         return len(self.filenames)
-        
 
 class test_set(Dataset):
     def __init__(self, root, input_transform=None, target_transform=None):

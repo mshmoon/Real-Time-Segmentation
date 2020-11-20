@@ -78,7 +78,7 @@ def convert(path,num_class):
         output=np.concatenate((output2,output1,output0),axis=2)
         print(output)
         cv2.imwrite("./color/"+name,output)
-        print('-------------------')
+
 def main():
     import argparse
     parser = argparse.ArgumentParser()
