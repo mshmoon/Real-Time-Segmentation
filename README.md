@@ -14,3 +14,5 @@ python main.py --cuda --model segnet train --datadir data  --num-epochs 30 --num
 pytorch>=0.4.0
 
 # result
+![image](https://github.com/mshmoon/Real-Time-Segmentation/blob/master/semantic-segmentation/showresult/1.png)
+![image](https://github.com/mshmoon/Real-Time-Segmentation/blob/master/semantic-segmentation/showresult/2.png)
