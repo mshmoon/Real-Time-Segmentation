@@ -45,7 +45,7 @@ def train(args, model):
     weight = torch.ones(20)
     weight[19]=0
     criterion = CrossEntropyLoss2d(weight.cuda())
-    model.load_state_dict(torch.load('segnet-001-0000.pth'),strict=True)
+    model.load_state_dict(torch.load('model-001-0000.pth'),strict=True)
     lr_start = 0.05
     for epoch in range(0, args.num_epochs):
         lr_init=lr_start*((args.num_epochs-epoch)/args.num_epochs)
@@ -136,8 +136,5 @@ if __name__ == '__main__':
     parser_train.add_argument('--num-epochs', type=int, default=32)
     parser_train.add_argument('--num-workers', type=int, default=4)
     parser_train.add_argument('--batch-size', type=int, default=1)
-    parser_train.add_argument('--steps-loss', type=int, default=50)
-    parser_train.add_argument('--steps-plot', type=int, default=0)
-    parser_train.add_argument('--steps-save', type=int, default=500)
     main(parser.parse_args())
 

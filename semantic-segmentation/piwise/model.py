@@ -20,23 +20,23 @@ num=0
 
 def conv3x3(in_planes, out_planes, stride=1):
     """3x3 convolution with padding"""
-  #  global num 
-  #  num=num+1
-  #  if num>=0 and num <=6:
-  #      return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,
-  #                       padding=1, bias=False)
-  #  if num > 6 and num <=14:
-  #      return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,dilation=1,
-  #                       padding=1, bias=False)
-  #  if num> 14 and num <=27:
-    
-   #     return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,dilation=1,
-   #                      padding=1, bias=False)
-   # if num> 27 and num <=35:
-        
-  #      return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,dilation=1,
-  #                       padding=1, bias=False)
-#
+ #global num 
+ #num=num+1
+ #if num>=0 and num <=6:
+ #    return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,
+ #                     padding=1, bias=False)
+ #if num > 6 and num <=14:
+ #    return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,dilation=1,
+ #                     padding=1, bias=False)
+ #if num> 14 and num <=27:
+
+ #    return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,dilation=1,
+ #                     padding=1, bias=False)
+ #if num> 27 and num <=35:
+ #   
+ #    return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,dilation=1,
+ #                     padding=1, bias=False)
+
     return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,
                          padding=1, bias=False)
 import torch
