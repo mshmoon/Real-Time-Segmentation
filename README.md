@@ -13,9 +13,11 @@ python main.py --cuda --model "choicemodel" train --datadir data  --num-epochs 3
 # dependency
 pytorch>=0.4.0
 
-# models
+# apporachs
 1.FPN_ASPP 
+       
 2.Nonlocal_Network
+
 3.BiseNet(simple version)
 
 # result
