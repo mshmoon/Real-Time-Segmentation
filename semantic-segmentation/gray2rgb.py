@@ -4,7 +4,6 @@ from PIL import Image
 import cv2
 
 ignore_label=0
-
 camvid_colors = [
                  [128, 128, 128],
                  [128,   0,   0],
@@ -56,7 +55,6 @@ def trans_id(pred_label):
     mask=np.zeros((512,1024))
     for k,v in id_to_transform.items():
         mask[pred_label==k]=v
-
     return mask
 
 def convert(path,num_class):

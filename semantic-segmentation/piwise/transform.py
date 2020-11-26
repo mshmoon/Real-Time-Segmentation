@@ -22,7 +22,7 @@ colors = [
               [  0,  80, 100],
               [  0,   0, 230],
               [119,  11,  32]
-                                ]
+        ]
 
 def colormap(n):
     cmap=np.zeros([n, 3]).astype(np.uint8)
