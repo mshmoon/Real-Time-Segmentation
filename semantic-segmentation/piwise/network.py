@@ -257,7 +257,6 @@ class BiseNetv1(nn.Module):
         self.classifer=nn.Conv2d(128,num_classes,1,1,0)
 
     def ARM(self,c1,c2,c3):
-
         _,_,s3,s4=c2.size()
         c2=self.ARM_layer1(F.avg_pool2d(c2,kernel_size=(s3,s4)))*c2+F.upsample_bilinear(c1,scale_factor=2)
         _, _, s3, s4 = c3.size()
@@ -265,7 +264,6 @@ class BiseNetv1(nn.Module):
         return c3
 
     def FFM(self,c_feat,s_out):
-
         feat=torch.cat([c_feat,s_out],1)
         feat=self.FFM_layer1(feat)
         _,_,s3,s4=feat.size()
@@ -274,16 +272,23 @@ class BiseNetv1(nn.Module):
 
     def forward(self, x):
         context_input=x
+
         c1,c2,c3=self.Context_model(context_input)
+
         c1=self.enc1(c1)
         c2=self.enc2(c2)
         c_feat=self.ARM(c1,c2,c3)
         x=self.Spatial_entry(x)
+
         for layer in self.Spatial_model:
             x=layer(x)
+
         s_out=self.enc3(x)
+
         feat=self.FFM(c_feat,s_out)
+
         score=self.classifer(feat)
+
         score=F.upsample_bilinear(score,scale_factor=8)
 
         return score

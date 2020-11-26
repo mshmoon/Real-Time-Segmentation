@@ -13,6 +13,11 @@ python main.py --cuda --model "choicemodel" train --datadir data  --num-epochs 3
 # dependency
 pytorch>=0.4.0
 
+# models
+1.FPN_ASPP 
+2.Nonlocal_Network
+3.BiseNet(simple version)
+
 # result
 ![image](https://github.com/mshmoon/Real-Time-Segmentation/blob/master/semantic-segmentation/showresult/1.png)
 ![image](https://github.com/mshmoon/Real-Time-Segmentation/blob/master/semantic-segmentation/showresult/2.png)

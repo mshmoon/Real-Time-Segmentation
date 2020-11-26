@@ -40,7 +40,6 @@ class Cityscapes(Dataset):
                               28: 15, 29: ignore_label, 30: ignore_label, 31: 16, 32: 17, 33: 18}
 
     def __getitem__(self, index):
-       
         filename = self.filenames[index]
         filename1=filename.split("gtFine")[0]+'leftImg8bit'
         degree = int(np.random.uniform(0,360,1))

@@ -1,6 +1,10 @@
 import os
-import torch
+import time
+from PIL import Image
 from argparse import ArgumentParser
+
+import torch
+import torchvision.transforms as transforms
 from torch.optim import SGD, Adam
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
@@ -8,14 +12,10 @@ from torchvision.transforms import Compose, CenterCrop, Normalize
 from torchvision.transforms import ToTensor, ToPILImage,Resize,RandomRotation,RandomGrayscale
 from piwise.dataset import Cityscapes
 from piwise.dataset import test_set
-
 from piwise.network import FPN_ASPP,Nonlocal_Network,BiseNetv1
 from piwise.criterion import CrossEntropyLoss2d
 from piwise.transform import  Colorize
-
-import torchvision.transforms as transforms
-from PIL import Image
-import time
+from piwise.utils import trans_id
 
 torch.backends.cudnn.benchmark = True 
 
@@ -69,7 +69,6 @@ def train(args, model):
             loss = criterion(output,targets)
             loss_back(loss,optimizer,args,step)
 
-from piwise.utils import trans_id
 def evaluate( model):
     # model.load_state_dict(torch.load('segnet-024-0000.pth'),strict=False)
     loader = DataLoader(test_set('D:\someprogram\dataset\cityscapes_test\\', input_transform, target_transform),
@@ -77,21 +76,22 @@ def evaluate( model):
 
     save_dir1 = './gray_results/'
     save_dir2 = './rgb_labels/'
+
     if not os.path.exists(save_dir1):
         os.makedirs(save_dir1)
     if not os.path.exists(save_dir2):
         os.makedirs(save_dir2)
+
     model.eval().cuda()
     for param in model.parameters():
         param.requires_grad = False
-    T=0
+
     for i ,(image,path) in enumerate(loader):
 
         image = Variable(image.cuda(), volatile=True)
         s1=time.time()
         outputs=model(image)
         s2=time.time()
-        T+=s2-s1
 
         outputs=outputs[0]
         out=outputs.data.max(1)[1][0]
@@ -103,13 +103,14 @@ def evaluate( model):
         rgb.save(save_dir2+path[0])
 
 def main(args):
-    Net = None
+
     if args.model == 'bisenetv1':
         Net = BiseNetv1
     if args.model == 'Nonlocal_Network':
         Net = Nonlocal_Network
     if args.model == 'FPN_ASPP':
         Net = FPN_ASPP
+
     assert Net is not None, f'model {args.model} not available'
 
     model = Net(args.num_classes)
