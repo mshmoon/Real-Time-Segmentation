@@ -88,7 +88,6 @@ def main():
     parser.add_argument('--path', default='./gray_results/', type=str)
     parser.add_argument('--num_class', default='19', type=int)
     args = parser.parse_args()
-
     path,num_class=args.path,args.num_class
     convert(path, num_class)
 
