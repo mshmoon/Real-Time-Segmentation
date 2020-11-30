@@ -77,7 +77,6 @@ def convert(path,num_class):
         output0=output0[:,:,np.newaxis]
         output1=output1[:,:,np.newaxis]
         output2=output2[:,:,np.newaxis]
-        #因为在opencv中图片格式为[h,w,c]，所以在第三个轴拼接
         output=np.concatenate((output2,output1,output0),axis=2)
         print(output)
         cv2.imwrite("./color/"+name,output)
